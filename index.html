@@ -7,11 +7,9 @@
     <!-- Fraunces Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/png" href="zata-logo-c258px.png">
-
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="zata-logo-c258px.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -35,7 +33,7 @@
     <div class="flex flex-col items-center mx-auto max-w-full w-full">
 
         <!-- HEADER & INSTRUCTIONS OUTSIDE WINDOW -->
-        <div class="w-full sm:w-[540px] max-w-full mb-6 text-center">
+        <div class="w-full sm:w-[425px] max-w-full mb-6 text-center">
             <h1 class="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50 mb-2 fraunces-text">Za'ta Email Signature Generator</h1>
             <p class="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed fraunces-text">
                 Fill in your details below then press 'Copy Signature' button, and paste it directly into your Outlook signature settings.
@@ -43,14 +41,14 @@
         </div>
 
         <!-- EMAIL COMPOSER CONTAINER WITH MACOS WINDOW TOP -->
-        <div id="formContainer" class="w-full sm:w-[540px] max-w-full bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden transition-colors duration-200">
+        <div id="formContainer" class="w-full sm:w-[425px] max-w-full bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden transition-colors duration-200">
             
             <!-- MACOS WINDOW TITLE BAR -->
             <div class="bg-zinc-100 dark:bg-zinc-800/80 px-4 py-2.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-2 transition-colors duration-200">
                 <div class="w-3 h-3 rounded-full bg-red-500 inline-block"></div>
                 <div class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></div>
                 <div class="w-3 h-3 rounded-full bg-green-500 inline-block"></div>
-                <div class="text-xs text-zinc-400 dark:text-zinc-400 font-medium ml-2 select-none">New Email</div>
+                <div class="text-xs text-zinc-400 dark:text-zinc-400 font-medium ml-2 select-none">New Message</div>
             </div>
 
             <!-- EMAIL HEADERS SECTION -->
@@ -58,7 +56,7 @@
 
                 <!-- FULL NAME -->
                 <div class="flex flex-col sm:flex-row sm:items-center px-5 py-3">
-                    <span class="w-36 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">FULL NAME:</span>
+                    <span class="w-32 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">FULL NAME:</span>
                     <div class="flex-1 relative">
                         <input type="text" id="inputName" placeholder="Name Surname" oninput="handleInput(this)" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 text-sm p-0">
                     </div>
@@ -66,7 +64,7 @@
 
                 <!-- JOB TITLE -->
                 <div class="flex flex-col sm:flex-row sm:items-center px-5 py-3">
-                    <span class="w-36 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">JOB TITLE:</span>
+                    <span class="w-32 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">JOB TITLE:</span>
                     <div class="flex-1 relative">
                         <input type="text" id="inputTitle" placeholder="Job Title" oninput="handleInput(this)" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 text-sm p-0">
                     </div>
@@ -74,7 +72,7 @@
 
                 <!-- BRANCH / DEPARTMENT -->
                 <div class="flex flex-col sm:flex-row sm:items-center px-5 py-3">
-                    <span class="w-36 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">DEPARTMENT:</span>
+                    <span class="w-32 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">DEPARTMENT:</span>
                     <div class="flex-1 relative">
                         <input type="text" id="inputBranch" placeholder="Branch / Department" oninput="handleInput(this)" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 text-sm p-0">
                     </div>
@@ -82,7 +80,7 @@
 
                 <!-- TELEPHONE -->
                 <div class="flex flex-col sm:flex-row sm:items-center px-5 py-3">
-                    <span class="w-36 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">TELEPHONE:</span>
+                    <span class="w-32 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">TELEPHONE:</span>
                     <div class="flex-1 relative">
                         <input type="text" id="inputTel" placeholder="123456789" oninput="handleInput(this)" onblur="validatePhoneInput(this)" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 text-sm p-0">
                         <div id="error-inputTel" class="text-[11px] text-[#F05122] mt-0.5 hidden">Please enter a valid telephone number</div>
@@ -91,7 +89,7 @@
 
                 <!-- EMAIL ADDRESS -->
                 <div class="flex flex-col sm:flex-row sm:items-center px-5 py-3">
-                    <span class="w-36 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">EMAIL ADDRESS:</span>
+                    <span class="w-32 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 sm:mb-0">EMAIL ADDRESS:</span>
                     <div class="flex-1 relative">
                         <input type="email" id="inputEmail" placeholder="name@zata.uk" oninput="handleInput(this)" onblur="validateEmailInput(this)" class="w-full bg-transparent border-0 focus:ring-0 focus:outline-none text-zinc-800 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-600 text-sm p-0">
                         <div id="error-inputEmail" class="text-[11px] text-[#F05122] mt-0.5 hidden">Please enter a valid email address</div>
@@ -108,12 +106,12 @@
                     <p>Regards,<br><span id="signOffName">Name</span></p>
                 </div>
 
-                <!-- SIGNATURE PREVIEW CONTAINER (Seamless, no divider, left-aligned) -->
+                <!-- SIGNATURE PREVIEW CONTAINER -->
                 <div>
                     <div id="signature-preview" style="display: block; width: 100%; text-align: left;">
                         <!-- DYNAMIC DOTS CONTAINER -->
                         <div id="previewDots" style="font-family: Georgia, serif !important; font-style: normal; font-size: 14px; font-weight: bold; line-height: 2.5; letter-spacing: 3px; color: #000000; white-space: nowrap; width: 380px; text-align: left; overflow: hidden;">
-                            ........................................
+                            ....................................
                         </div>
 
                         <table id="signatureTable" role="presentation" cellspacing="0" cellpadding="0" style="border-collapse: collapse; background-color: transparent; border-width: 0px; box-shadow: none; margin: 0px; padding: 0px; width: auto; max-width: 380px;">
@@ -201,7 +199,7 @@
             >
                 Copy Signature
             </button>
-            <div id="pasteNotice" class="text-xs text-black dark:text-zinc-100 font-semibold mt-3 hidden transition-all duration-300 text-center w-full sm:w-[400px] max-w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 sm:p-6 shadow-sm">
+            <div id="pasteNotice" class="text-xs text-black dark:text-zinc-100 font-semibold mt-3 hidden transition-all duration-300 text-center w-full sm:w-[425px] max-w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 sm:p-6 shadow-sm">
                 <p class="text-base font-bold text-zinc-900 dark:text-zinc-50 mb-0.5 fraunces-text">Signature Copied!</p>
                 <p class="text-zinc-500 dark:text-zinc-400 font-normal text-[11px] mb-4 fraunces-text">Copied to clipboard! (Click anywhere on the page to dismiss)</p>
                 
@@ -216,7 +214,7 @@
 
                     <div class="flex items-start gap-3">
                         <span class="flex-none flex items-center justify-center w-5 h-5 rounded-full bg-[#F05122] text-white font-bold text-[11px] mt-0.5 fraunces-text">2</span>
-                        <p class="text-zinc-600 dark:text-zinc-300 border-l-2 border-zinc-200 dark:border-zinc-700 pl-2.5 leading-relaxed fraunces-text">Click <strong>"New"</strong> to create a signature.</p>
+                        <p class="text-zinc-600 dark:text-zinc-300 border-l-2 border-zinc-200 dark:border-zinc-700 pl-2.5 leading-relaxed fraunces-text">Click <strong>"New"</strong> to create a signature or pick an existing signature to update.</p>
                     </div>
 
                     <div class="flex items-start gap-3">
@@ -307,7 +305,36 @@
             const dotWidth = tempSpan.getBoundingClientRect().width || 10;
             document.body.removeChild(tempSpan);
 
-            const count = Math.max(5, Math.floor(tableWidth / dotWidth));
+            // Calculate exact maximum text line width within the signature table using DOM range rects
+            let maxLineWidth = 0;
+            const rightTd = table.querySelector('td:last-child');
+            if (rightTd) {
+                const textNodes = [];
+                const walk = document.createTreeWalker(rightTd, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walk.nextNode()) {
+                    if (node.nodeValue.trim().length > 0) {
+                        textNodes.push(node);
+                    }
+                }
+                textNodes.forEach(textNode => {
+                    const range = document.createRange();
+                    range.selectNodeContents(textNode);
+                    const rects = range.getClientRects();
+                    for (let i = 0; i < rects.length; i++) {
+                        if (rects[i].width > maxLineWidth) {
+                            maxLineWidth = rects[i].width;
+                        }
+                    }
+                });
+            }
+
+            // Total width up to the end of the longest line (Left col 122px + gap 20px + right padding 10px + longest text line)
+            const calculatedTotalWidth = 122 + 20 + 10 + maxLineWidth;
+            const targetWidth = maxLineWidth > 0 ? Math.min(calculatedTotalWidth, tableWidth) : tableWidth;
+
+            // Calculate dot count to match the end of the line plus 2 extra dots
+            const count = Math.max(5, Math.floor(targetWidth / dotWidth) + 2);
             dotsContainer.innerText = '.'.repeat(count);
         }
 
