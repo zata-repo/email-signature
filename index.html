@@ -26,7 +26,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
         }
         p.text-xs.text-zinc-600.dark\:text-zinc-400.leading-relaxed.fraunces-text {
-            font-size: 14px !important;
+    font-size: 14px !important;
         }
     </style>
 </head>
@@ -113,8 +113,8 @@
                 <div>
                     <div id="signature-preview" style="display: block; width: 100%; text-align: left;">
                         <!-- DYNAMIC DOTS CONTAINER -->
-                        <div id="previewDots" style="font-family: Georgia, serif !important; font-style: normal; font-size: 14px; font-weight: bold; line-height: 2.5; letter-spacing: 3px; color: #000000; white-space: nowrap; width: 380px; max-width: 380px; text-align: left; overflow: hidden;">
-                            .
+                        <div id="previewDots" style="font-family: Georgia, serif !important; font-style: normal; font-size: 14px; font-weight: bold; line-height: 2.5; letter-spacing: 3px; color: #000000; white-space: nowrap; width: 380px; text-align: left; overflow: hidden;">
+                            ....................................
                         </div>
 
                         <table id="signatureTable" role="presentation" cellspacing="0" cellpadding="0" style="border-collapse: collapse; background-color: transparent; border-width: 0px; box-shadow: none; margin: 0px; padding: 0px; width: auto; max-width: 380px;">
@@ -294,7 +294,6 @@
             
             const tableWidth = Math.min(table.getBoundingClientRect().width || 380, 380);
 
-            // Measure step width between dots including letter-spacing
             const tempSpan = document.createElement('span');
             tempSpan.style.fontFamily = 'Georgia, serif';
             tempSpan.style.fontSize = '14px';
@@ -303,14 +302,11 @@
             tempSpan.style.visibility = 'hidden';
             tempSpan.style.position = 'absolute';
             tempSpan.style.whiteSpace = 'nowrap';
-            tempSpan.innerText = '..';
-            document.body.appendChild(tempSpan);
-            const doubleWidth = tempSpan.getBoundingClientRect().width;
             tempSpan.innerText = '.';
-            const singleWidth = tempSpan.getBoundingClientRect().width;
+            document.body.appendChild(tempSpan);
+            
+            const dotWidth = tempSpan.getBoundingClientRect().width || 10;
             document.body.removeChild(tempSpan);
-
-            const dotStepWidth = (doubleWidth - singleWidth) || 6.5;
 
             // Calculate exact maximum text line width within the signature table using DOM range rects
             let maxLineWidth = 0;
@@ -337,16 +333,12 @@
             }
 
             // Total width up to the end of the longest line (Left col 122px + gap 20px + right padding 10px + longest text line)
-            const exactTotalWidth = 122 + 20 + 10 + maxLineWidth;
-            const targetWidth = maxLineWidth > 0 ? Math.min(exactTotalWidth, tableWidth) : tableWidth;
+            const calculatedTotalWidth = 122 + 20 + 10 + maxLineWidth;
+            const targetWidth = maxLineWidth > 0 ? Math.min(calculatedTotalWidth, tableWidth) : tableWidth;
 
-            // Calculate dot count
-            const count = Math.max(5, Math.floor(targetWidth / dotStepWidth));
+            // Calculate dot count to match the end of the line plus 2 extra dots
+            const count = Math.max(5, Math.floor(targetWidth / dotWidth) + 2);
             dotsContainer.innerText = '.'.repeat(count);
-
-            // CRITICAL FOR OUTLOOK MSO: Hard lock the pixel width so Outlook cannot auto-expand the cell
-            dotsContainer.style.width = exactTotalWidth + "px";
-            dotsContainer.style.maxWidth = exactTotalWidth + "px";
         }
 
         function handleInput(input) {
@@ -499,6 +491,7 @@
             } catch (err) {
                 console.error('Failed to copy: ', err);
             } finally {
+                // Restore UI preview theme colors
                 updateSignaturePreviewTheme();
             }
         }
