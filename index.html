@@ -25,9 +25,6 @@
         .email-body-text {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
         }
-        p.text-xs.text-zinc-600.dark\:text-zinc-400.leading-relaxed.fraunces-text {
-    font-size: 14px !important;
-        }
     </style>
 </head>
 <body id="appBody" class="p-4 sm:p-6 bg-zinc-100 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 min-h-screen flex flex-col items-center justify-start overflow-x-hidden transition-colors duration-200">
@@ -105,7 +102,7 @@
             <div class="p-5 sm:p-6">
                 <div class="email-body-text text-zinc-700 dark:text-zinc-300 text-sm leading-relaxed space-y-4">
                     <p>Hello Team,</p>
-                    <p>Fill in your details above and check the signature below as you continue. When you're ready, press 'Copy Signature'. Have a good day.</p>
+                    <p>Fill in your details above and check the resulting signature below. When you're ready, press 'Copy Signature'. Have a good day.</p>
                     <p>Regards,<br><span id="signOffName">Name</span></p>
                 </div>
 
@@ -114,7 +111,7 @@
                     <div id="signature-preview" style="display: block; width: 100%; text-align: left;">
                         <!-- DYNAMIC DOTS CONTAINER -->
                         <div id="previewDots" style="font-family: Georgia, serif !important; font-style: normal; font-size: 14px; font-weight: bold; line-height: 2.5; letter-spacing: 3px; color: #000000; white-space: nowrap; width: 380px; text-align: left; overflow: hidden;">
-                            .
+                            ....................................
                         </div>
 
                         <table id="signatureTable" role="presentation" cellspacing="0" cellpadding="0" style="border-collapse: collapse; background-color: transparent; border-width: 0px; box-shadow: none; margin: 0px; padding: 0px; width: auto; max-width: 380px;">
@@ -290,10 +287,10 @@
         function adjustDots() {
             const dotsContainer = document.getElementById('previewDots');
             const table = document.getElementById('signatureTable');
-            if (!dotsContainer || !table) return;
-            
-            const tableWidth = Math.min(table.getBoundingClientRect().width || 380, 380);
+            const previewBox = document.getElementById('signature-preview');
+            if (!dotsContainer || !table || !previewBox) return;
 
+            // Measure single dot width dynamically in current OS/browser context
             const tempSpan = document.createElement('span');
             tempSpan.style.fontFamily = 'Georgia, serif';
             tempSpan.style.fontSize = '14px';
@@ -308,8 +305,10 @@
             const dotWidth = tempSpan.getBoundingClientRect().width || 10;
             document.body.removeChild(tempSpan);
 
-            // Calculate exact maximum text line width within the signature table using DOM range rects
-            let maxLineWidth = 0;
+            // Cross-Platform Fix: Measure exact rightmost position of text relative to preview box container
+            const previewLeft = previewBox.getBoundingClientRect().left;
+            let maxRightEdge = previewLeft + 152; // Fallback min boundary
+
             const rightTd = table.querySelector('td:last-child');
             if (rightTd) {
                 const textNodes = [];
@@ -325,19 +324,20 @@
                     range.selectNodeContents(textNode);
                     const rects = range.getClientRects();
                     for (let i = 0; i < rects.length; i++) {
-                        if (rects[i].width > maxLineWidth) {
-                            maxLineWidth = rects[i].width;
+                        if (rects[i].right > maxRightEdge) {
+                            maxRightEdge = rects[i].right;
                         }
                     }
                 });
             }
 
-            // Total width up to the end of the longest line (Left col 122px + gap 20px + right padding 10px + longest text line)
-            const calculatedTotalWidth = 122 + 20 + 10 + maxLineWidth;
-            const targetWidth = maxLineWidth > 0 ? Math.min(calculatedTotalWidth, tableWidth) : tableWidth;
+            // Calculate actual rendered pixel width from the container's left edge
+            const actualRenderedWidth = maxRightEdge - previewLeft;
+            const maxTableCap = Math.min(table.getBoundingClientRect().width || 380, 380);
+            const targetWidth = Math.min(actualRenderedWidth, maxTableCap);
 
-            // Calculate dot count to match the end of the line plus 2 extra dots
-            const count = Math.max(5, Math.floor(targetWidth / dotWidth) + 2);
+            // Compute dot count accurately across Windows & Mac
+            const count = Math.max(5, Math.floor(targetWidth / dotWidth) + 1);
             dotsContainer.innerText = '.'.repeat(count);
         }
 
